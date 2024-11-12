@@ -14,10 +14,10 @@ RUN apk add --update --no-cache py3-pip
 WORKDIR /usr/src/app
 
 # 6. Copia os arquivos da pasta 'src' (código do projeto) para dentro do container
-COPY src .
+COPY src . 
 
 # 7. Instala as dependências Python listadas no arquivo 'requirements.txt'
-RUN pip install --no-cache-dir -r ./requirements.txt --break-system-packages
+RUN pip install --no-cache-dir -r ./requirements.txt
 
 # 8. Define variáveis de ambiente padrão
 ENV GRASS_USER=lui_zzzz@hotmail.com
