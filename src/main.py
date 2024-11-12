@@ -1,5 +1,8 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import WebDriverException, NoSuchDriverException
 import time
 import requests
@@ -62,11 +65,24 @@ except (WebDriverException, NoSuchDriverException):
 # Início do login
 print('Logging in...')
 driver.get('https://app.getgrass.io/')
-time.sleep(3)
+
 try:
-    driver.find_element('xpath', '//*[@name="user"]').send_keys(USER)
-    driver.find_element('xpath', '//*[@name="password"]').send_keys(PASSW)
-    driver.find_element('xpath', '//*[@type="submit"]').click()
+    # Espera até que o campo de usuário esteja presente e visível
+    user_field = WebDriverWait(driver, 15).until(
+        EC.visibility_of_element_located((By.XPATH, '//*[@name="user"]'))
+    )
+    password_field = WebDriverWait(driver, 15).until(
+        EC.visibility_of_element_located((By.XPATH, '//*[@name="password"]'))
+    )
+    submit_button = WebDriverWait(driver, 15).until(
+        EC.element_to_be_clickable((By.XPATH, '//*[@type="submit"]'))
+    )
+
+    # Insere as credenciais
+    user_field.send_keys(USER)
+    password_field.send_keys(PASSW)
+    submit_button.click()
+    
 except Exception as e:
     print('Failed during login:', str(e))
     generate_error_report(driver)
