@@ -5,10 +5,6 @@ from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.core.os_manager import ChromeType
 
 from selenium.common.exceptions import WebDriverException, NoSuchDriverException
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-
 
 import time
 import requests
@@ -24,8 +20,8 @@ CRX_URL = "https://clients2.google.com/service/update2/crx?response=redirect&pro
 USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36"
 
 try:
-    USER = os.environ['GRASS_USER']
-    PASSW = os.environ['GRASS_PASS']
+    USER = 'lui_zzzz@hotmail.com'
+    PASSW = 'Burro12@'
 except:
     USER = ''
     PASSW = ''
@@ -108,17 +104,14 @@ except (WebDriverException, NoSuchDriverException) as e:
 
 #driver.get('chrome-extension://'+extensionId+'/index.html')
 print('Started! Logging in...')
-
-driver.get('https://app.getgrass.io/dashboard')
-
-time.sleep(10)
+driver.get('https://app.getgrass.io/')
 
 sleep = 0
 while True:
     try:
-        user = WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, '//*[@name="user"]')))
-        password = WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, '//*[@name="password"]')))
-        submit = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, '//*[@type="submit"]')))
+        driver.find_element('xpath', '//*[@name="user"]')
+        driver.find_element('xpath', '//*[@name="password"]')
+        driver.find_element('xpath', '//*[@type="submit"]')
         break
     except:
         time.sleep(1)
@@ -130,7 +123,7 @@ while True:
             driver.quit()
             exit()
 
-
+#find name="user"
 user = driver.find_element('xpath', '//*[@name="user"]')
 passw = driver.find_element('xpath', '//*[@name="password"]')
 submit = driver.find_element('xpath', '//*[@type="submit"]')
@@ -139,6 +132,9 @@ submit = driver.find_element('xpath', '//*[@type="submit"]')
 user.send_keys(USER)
 passw.send_keys(PASSW)
 submit.click()
+
+#id="chakra-toast-manager-top-right" is the toast
+
 
 sleep = 0
 while True:
