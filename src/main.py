@@ -5,6 +5,10 @@ from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.core.os_manager import ChromeType
 
 from selenium.common.exceptions import WebDriverException, NoSuchDriverException
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
 
 import time
 import requests
@@ -105,13 +109,16 @@ except (WebDriverException, NoSuchDriverException) as e:
 #driver.get('chrome-extension://'+extensionId+'/index.html')
 print('Started! Logging in...')
 driver.get('https://app.getgrass.io/')
+# <input placeholder="Username or Email" id="field-:r7:" class="chakra-input css-zli55d" name="user" data-gtm-form-interact-field-id="0" aria-invalid="true" aria-describedby="field-:r7:-feedback">
+# <input placeholder="Password" id="field-:r8:" class="chakra-input css-zwiz8v" type="password" name="password" data-gtm-form-interact-field-id="1">
+# <button type="submit" class="chakra-button css-b4gyfj" disabled="">ACCESS MY ACCOUNT<span class="chakra-button__icon css-1hzyiq5"><svg viewBox="0 0 25 25" fill="none" focusable="false" class="chakra-icon css-1ouhgs0" aria-hidden="true"><path d="M4.5 12.8h16m0 0l-6-6m6 6l-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></button># clicar no name="user"
 
 sleep = 0
 while True:
     try:
-        driver.find_element('xpath', '//*[@name="user"]')
-        driver.find_element('xpath', '//*[@name="password"]')
-        driver.find_element('xpath', '//*[@type="submit"]')
+        user = WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, '//*[@name="user"]')))
+        password = WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, '//*[@name="password"]')))
+        submit = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, '//*[@type="submit"]')))
         break
     except:
         time.sleep(1)
@@ -123,22 +130,15 @@ while True:
             driver.quit()
             exit()
 
-#find name="user"
+
 user = driver.find_element('xpath', '//*[@name="user"]')
 passw = driver.find_element('xpath', '//*[@name="password"]')
 submit = driver.find_element('xpath', '//*[@type="submit"]')
-# /html/body/div[1]/div/div[1]/div/div[2]/div/div[1]/div/form/button
-submit2 = driver.find_element('xpath', '/html/body/div[1]/div/div[1]/div/div[2]/div/div[1]/div/form/button')
 
 #get user from env
 user.send_keys(USER)
 passw.send_keys(PASSW)
-try:
-    submit.click()
-except:
-    print('Could not click submit! Trying alternative...')
-    submit2.click()
-
+submit.click()
 
 sleep = 0
 while True:
