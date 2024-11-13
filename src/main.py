@@ -127,13 +127,17 @@ while True:
 user = driver.find_element('xpath', '//*[@name="user"]')
 passw = driver.find_element('xpath', '//*[@name="password"]')
 submit = driver.find_element('xpath', '//*[@type="submit"]')
+# /html/body/div[1]/div/div[1]/div/div[2]/div/div[1]/div/form/button
+submit2 = driver.find_element('xpath', '/html/body/div[1]/div/div[1]/div/div[2]/div/div[1]/div/form/button')
 
 #get user from env
 user.send_keys(USER)
 passw.send_keys(PASSW)
-submit.click()
-
-#id="chakra-toast-manager-top-right" is the toast
+try:
+    submit.click()
+except:
+    print('Could not click submit! Trying alternative...')
+    submit2.click()
 
 
 sleep = 0
