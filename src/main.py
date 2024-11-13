@@ -108,10 +108,10 @@ except (WebDriverException, NoSuchDriverException) as e:
 
 #driver.get('chrome-extension://'+extensionId+'/index.html')
 print('Started! Logging in...')
-driver.get('https://app.getgrass.io/')
-# <input placeholder="Username or Email" id="field-:r7:" class="chakra-input css-zli55d" name="user" data-gtm-form-interact-field-id="0" aria-invalid="true" aria-describedby="field-:r7:-feedback">
-# <input placeholder="Password" id="field-:r8:" class="chakra-input css-zwiz8v" type="password" name="password" data-gtm-form-interact-field-id="1">
-# <button type="submit" class="chakra-button css-b4gyfj" disabled="">ACCESS MY ACCOUNT<span class="chakra-button__icon css-1hzyiq5"><svg viewBox="0 0 25 25" fill="none" focusable="false" class="chakra-icon css-1ouhgs0" aria-hidden="true"><path d="M4.5 12.8h16m0 0l-6-6m6 6l-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></button># clicar no name="user"
+
+driver.get('https://app.getgrass.io/dashboard')
+
+time.sleep(10)
 
 sleep = 0
 while True:
